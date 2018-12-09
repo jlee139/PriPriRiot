@@ -180,7 +180,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: DAY 1
+  m_Text: 
 --- !u!222 &333650388
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -376,8 +376,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 2.9, y: -11.8}
-  m_SizeDelta: {x: 446.3, y: 264.3}
+  m_AnchoredPosition: {x: 2.9, y: 3}
+  m_SizeDelta: {x: 446.3, y: 294}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &644197545
 MonoBehaviour:
@@ -411,7 +411,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Rand Text
+  m_Text: 
 --- !u!222 &644197546
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -637,7 +637,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 7 days left until the Birthday
+  m_Text: 
 --- !u!222 &1225256198
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -721,7 +721,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1859937326}
   - component: {fileID: 1859937325}
-  - component: {fileID: 1859937327}
   m_Layer: 0
   m_Name: MasterMind
   m_TagString: Untagged
@@ -757,14 +756,3 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1859937327
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1859937324}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 45c7f9fa02880f64a924a84460f4b2d1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 

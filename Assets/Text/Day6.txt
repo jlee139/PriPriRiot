@@ -1,2 +1,3 @@
 Day 6;H;0;
-1 day until the Birthday;S;1;
+1 day until the Birthday;S;0;
+END;T;1;
