@@ -1,0 +1,8 @@
+Day 1;H;0;
+6 days until the Birthday;S;1;
+Being in prison is bad enough, but do you know what's worse?;T;0;
+Being stuck in prison with your child's birthday coming up.;T;0;
+But you're nothing if not clever. You have a plan. Is that how you ended up here?;T;0;
+Well, no need to be so rude.;T;0;
+If you can convince enough of your inmates and incite a riot, you'll be able to escape to celebrate your child's birthday.;T;0;
+Sounds easy enough, right?;T;1;
