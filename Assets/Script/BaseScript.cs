@@ -31,18 +31,25 @@ public class BaseScript : MonoBehaviour {
     List<string> Allcrimes;
 
     int curline, curDay;
-    bool vnmode;
+    bool vnmode, diamode;
 
     [SerializeField] Canvas mapCanvas;
     [SerializeField] Canvas messageCanvas;
+    [SerializeField] Canvas dialogueCanvas;
     [SerializeField] Text messageText;
     [SerializeField] Text subText;
     [SerializeField] Text HeadText;
+    [SerializeField] Text DiaText;
+    [SerializeField] Button EndDay;
 
     // Use this for initialization
     void Start() {
         //We start in vn mode
         vnmode = true;
+        diamode = false;
+        EndDay.enabled = false;
+        dialogueCanvas.enabled = false;
+        mapCanvas.enabled = false;
 
         //Get our dialogue
         alllines = new List<EachLine>();
@@ -78,16 +85,29 @@ public class BaseScript : MonoBehaviour {
             curline++;
         }
 
-        //If we're out of vn mode, and player presses down
-        else if (Input.GetMouseButtonDown(0) && !vnmode)
+        //If we're out of vn mode and dia mode, and player presses down, open us up to the map
+        else if (Input.GetMouseButtonDown(0) && !vnmode && !diamode)
         {
             messageCanvas.enabled = false;
+            mapCanvas.enabled = true;
+        }
+
+        //If we've hit the end of our deadline, it's time to activate the endings
+        if (curDay > 7)
+        {
+            if (convertedpri.Count < 5)
+            {
+                BadEndActivate();
+            }
         }
 
     }
 
     public void ShowDialogue()
     {
+        //Just make sure that we're not in dialogue mode
+        diamode = false;
+
         //If the "new page" is 1, then we need to clear the information that's alerady been in there
         if (alllines[curline].newpage == 1)
         {
@@ -127,6 +147,34 @@ public class BaseScript : MonoBehaviour {
         }
     }
 
+    //This function only runs when a location on the map has been clicked
+    public void TimeforDialogue(string loc)
+    {
+        diamode = true;
+
+        //Set up the new diamode by getting rid of the map and turning the other shit back on
+        mapCanvas.enabled = false;
+        dialogueCanvas.enabled = true;
+        EndDay.enabled = true;
+
+        DiaText.text = loc;
+
+    }
+
+    public void EndDayClicked()
+    {
+        //Time to increment day!
+        curDay++;
+      //  Debug.Log("Today is "+curDay);
+
+        messageText.text = "";
+
+        vnmode = true;
+        dialogueCanvas.enabled = false;
+        mapCanvas.enabled = false;
+        messageCanvas.enabled = true;
+    }
+
     void ShowReport()
     {
         //Use messageText.text to show the current state of the prison
@@ -149,7 +197,6 @@ public class BaseScript : MonoBehaviour {
        
         //display message
         messageText.text = report;
-
     }
 
     //Load Data from file just once
@@ -264,5 +311,22 @@ public class BaseScript : MonoBehaviour {
         }
 
     }
+
+   void BadEndActivate()
+    {
+        //Clear up the previous lines stored in alllines
+        alllines.Clear();
+        curline = 0;
+        //Then load dialogue from our BadEnd text
+        LoadDialogue("Assets/Text/EndBad.txt");
+        vnmode = true;
+
+        mapCanvas.enabled = false;
+        dialogueCanvas.enabled = false;
+        messageCanvas.enabled = true;
+
+    }
+
+
 
 }

@@ -24,7 +24,7 @@ public class locbutton : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
     public void OnPointerEnter(PointerEventData pointerEventData)
     {
         //Output to console the GameObject's name and the following message
-        Debug.Log("Cursor Entering " + name + " GameObject");
+        //Debug.Log("Cursor Entering " + name + " GameObject");
         locmessage.text = LocationName;
     }
 
@@ -32,7 +32,9 @@ public class locbutton : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
     public void OnPointerExit(PointerEventData pointerEventData)
     {
         //Output the following message with the GameObject's name
-        Debug.Log("Cursor Exiting " + name + " GameObject");
+       // Debug.Log("Cursor Exiting " + name + " GameObject");
         locmessage.text = "Click on a location";
     }
+
+ 
 }
