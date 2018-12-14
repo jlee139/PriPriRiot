@@ -1,3 +1,3 @@
-Day 7;H;0;
-Birthday;S;0;
+You did it!;H;0;
+The riot was held. You escaped to see your child for a birhtday party!;S;0;
 END;T;1;

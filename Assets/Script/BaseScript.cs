@@ -24,6 +24,13 @@ public class BaseScript : MonoBehaviour {
         public string crime;
     }
 
+    struct DialogueChoices
+    {
+        public string question;
+        public string choiceRight;
+        public string choiceWrong;
+    }
+
     List<EachLine> alllines;
     List<Prisoner> allprisoners;
     List<Prisoner> convertedpri;
