@@ -26,12 +26,14 @@ public class BaseScript : MonoBehaviour {
 
     List<EachLine> alllines;
     List<Prisoner> allprisoners;
+    List<Prisoner> convertedpri;
     List<string> Allnames;
     List<string> Allcrimes;
 
     int curline, curDay;
     bool vnmode;
 
+    [SerializeField] Canvas mapCanvas;
     [SerializeField] Canvas messageCanvas;
     [SerializeField] Text messageText;
     [SerializeField] Text subText;
@@ -57,6 +59,7 @@ public class BaseScript : MonoBehaviour {
 
         //Game preparing
         allprisoners = new List<Prisoner>();
+        convertedpri = new List<Prisoner>();
         Allnames = new List<string>();
         Allcrimes = new List<string>();
 
@@ -74,6 +77,13 @@ public class BaseScript : MonoBehaviour {
             ShowDialogue();
             curline++;
         }
+
+        //If we're out of vn mode, and player presses down
+        else if (Input.GetMouseButtonDown(0) && !vnmode)
+        {
+            messageCanvas.enabled = false;
+        }
+
     }
 
     public void ShowDialogue()
@@ -120,7 +130,25 @@ public class BaseScript : MonoBehaviour {
     void ShowReport()
     {
         //Use messageText.text to show the current state of the prison
+        string report = "Day " +curDay+ " Report:\n\n";
 
+        //check to see if we converted anyone and print them
+        if (convertedpri.Count > 0)
+        {
+            report += "You have convinced:\n\n";
+            for (int i=0; i< convertedpri.Count; i++)
+            {
+                report += convertedpri[i].name+ "\n";
+            }
+            report += "\n";
+        }
+        else
+        {
+            report += "You have convinced no one. Get to work!";
+        }
+       
+        //display message
+        messageText.text = report;
 
     }
 
@@ -163,18 +191,31 @@ public class BaseScript : MonoBehaviour {
             //delete name from Allnames so we don't get a repeat
             Allnames.RemoveAt(random);
 
-            //Set a random difficulty for this guy
-            temp.difficulty = Random.Range(0,5);
+            if (temp.name.Equals("Harada"))
+            {
+                temp.difficulty = 5;
+                temp.crime = "???";
+                temp.converted = false;
+            }
+            else
+            {
+                //Set a random difficulty for this guy
+                temp.difficulty = Random.Range(1, 5);
 
-            //Set a random crime
-            random = Random.Range(0, Allcrimes.Count);
-            temp.crime = Allcrimes[random];
+                //Set a random crime
+                random = Random.Range(0, Allcrimes.Count);
+                temp.crime = Allcrimes[random];
 
-            //Set converted to false unless difficulty is 0
-            if (temp.difficulty == 0) temp.converted = true;
-            else temp.converted = false;
+                //Set converted to false unless difficulty is 0
+                if (temp.difficulty == 0)
+                {
+                    temp.converted = true;
+                    convertedpri.Add(temp);
+                }
+                else temp.converted = false;
+            }
 
-            Debug.Log("Name: "+temp.name+"\tCrime: "+temp.crime+"\tDifficulty: "+temp.difficulty);
+           // Debug.Log("Name: "+temp.name+"\tCrime: "+temp.crime+"\tDifficulty: "+temp.difficulty);
 
             allprisoners.Add(temp);
         }
