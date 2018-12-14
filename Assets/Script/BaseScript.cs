@@ -29,6 +29,8 @@ public class BaseScript : MonoBehaviour {
         public string question;
         public string choiceRight;
         public string choiceWrong;
+        public string responseRight;
+        public string responseWrong;
     }
 
     List<EachLine> alllines;
@@ -102,9 +104,13 @@ public class BaseScript : MonoBehaviour {
         //If we've hit the end of our deadline, it's time to activate the endings
         if (curDay > 7)
         {
-            if (convertedpri.Count < 5)
+            if (convertedpri.Count < 10)
             {
                 BadEndActivate();
+            }
+            else
+            {
+                GoodEndActivate();
             }
         }
 
@@ -334,6 +340,20 @@ public class BaseScript : MonoBehaviour {
 
     }
 
+    void GoodEndActivate()
+    {
+        //Clear up the previous lines stored in alllines
+        alllines.Clear();
+        curline = 0;
+        //Then load dialogue from our BadEnd text
+        LoadDialogue("Assets/Text/EndNormal.txt");
+        vnmode = true;
+
+        mapCanvas.enabled = false;
+        dialogueCanvas.enabled = false;
+        messageCanvas.enabled = true;
+
+    }
 
 
 }
