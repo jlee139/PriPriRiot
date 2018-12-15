@@ -1,10 +1,10 @@
 Rape;You'd understand if you were in the situation;Nope. Sorry. I disagree.;Yeah. Something about seeing hopeless victims gives me a rush of power.;Ah, is that so? Everyone is different.;... You're sick.;
 Possession of Child Porn;It wasn't like I wanted them. It came in a bundle with other things!;Yeah, you really have to be careful on the web.;Hah! That's rich. Like hell you didn't know what you clicked.;The web is such a scary place...;Well... screw you!;
 Possession of Illegal Substance;The high in here just isn't the same.;I can say that about everything in here.;Should you even be getting high in here?;Haha. You get me.;Ugh. You're such a buzzkill.;
-Domestic Violence;
-Manslaughter;
-Murder;
-Car Jacking;
-Public Disturbance;
+Domestic Violence;I don't have a temper! Who's making up rumors about me?;Don't have to make up rumors if that's what you're like.;No one's making up rumors. Calm down.;Haha! That's true! I am like that, aren't I?;Don't you tell me to calm down! Want to die?;
+Involuntary Manslaughter;Huh? Yeah, if I can go back in time, I wouldn't have killed that bastard for sleeping with my wife.;The one you should've killed was your wife.;Yeah, murder is never the right answer.;Right? Better to stop the whore than to blame her victims.;Hah! Your kid's lucky you're in prison. You're too naive to survive in the real world.;
+Murder;I planned for years to kill my old man! To think it'd be so easy...;How did you do it?; Why did it take you so long?;Hehe. You really want to know? It's been a while since someone was interested in me.;Don't remind me! If I had done it earlier, my little sister wouldn't have...;
+Car Jacking;I can't help it, you know? I see shiny tech, and I just have to have it.;I've always struggled with technology. Can you help me?;If it's not yours, you shouldn't touch it.;My help? You want my help? Oh man, I'd love to!;Yeah, yeah. I know. I know. It's just hard to do.;
+Public Disturbance;When you have a nice body, you should flaunt it!;If only you can say the same for your face, eh?;That's... not what you were arrested for, though?;Haha! Indeed! Indeed! If only my face was a beautiful as my body!;Why you gotta be such a spoilsport?;
 Pedophilia;Hm? How old is your child you said?;Six years old;You know what? I think it's fine if you don't help me.;Six? Haha! That's a wonderful age!;Haaah? What's with that coldness? I was just trying to be friendly.;
 Obstruction of Justice;I'm not anything like you people. I'm a political prisoner!;That must be rough. What they get you for?;And I care because...?;Eh? Are you interested? Really? Let me tell you all about it!;Ugh! All of you prisoners are the same!;
