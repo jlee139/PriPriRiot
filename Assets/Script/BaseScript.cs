@@ -4,6 +4,7 @@ using UnityEngine.UI;
 using System.Collections.Generic;
 using System.Text;
 using System.IO;
+using UnityEngine.EventSystems;
 
 public class BaseScript : MonoBehaviour {
 
@@ -201,8 +202,14 @@ public class BaseScript : MonoBehaviour {
             //Turn each prisoner into a clickable ClickText
             Text ourtext = Instantiate(ClickText, new Vector3(0,i,0), Quaternion.identity) as Text;
             ourtext.transform.SetParent(dialogueCanvas.transform);
-            ourtext.transform.position = new Vector3(dialogueCanvas.transform.position.x, dialogueCanvas.transform.position.y/2+30+(i * 20),0);
+            ourtext.transform.position = new Vector3(dialogueCanvas.transform.position.x, dialogueCanvas.transform.position.y/2+30+(i * 30),0);
             ourtext.text = temppri.name;
+
+            EventTrigger trigger = ourtext.GetComponent<EventTrigger>();
+            EventTrigger.Entry entry = new EventTrigger.Entry();
+            entry.eventID = EventTriggerType.PointerDown;
+            entry.callback.AddListener((data) => { OnPointerDownDelegate((PointerEventData)data, ourtext); });
+            trigger.triggers.Add(entry);
 
             curlocpriobj.Add(ourtext);
 
@@ -215,6 +222,11 @@ public class BaseScript : MonoBehaviour {
             allprisoners.Add(deleted[i]);
         }
         
+    }
+
+    public void OnPointerDownDelegate(PointerEventData data, Text textname)
+    {
+        Debug.Log(textname.text);
     }
 
     public void PrisonerClicked(int i)

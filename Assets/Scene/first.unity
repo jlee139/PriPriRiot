@@ -383,6 +383,106 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   LocationName: Solitary
   locmessage: {fileID: 1321432226}
+--- !u!1001 &278495648
+Prefab:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 224362307332801484, guid: f4f614fd0b03bc045a79191da68e1479,
+        type: 2}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 224362307332801484, guid: f4f614fd0b03bc045a79191da68e1479,
+        type: 2}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 224362307332801484, guid: f4f614fd0b03bc045a79191da68e1479,
+        type: 2}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 224362307332801484, guid: f4f614fd0b03bc045a79191da68e1479,
+        type: 2}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 224362307332801484, guid: f4f614fd0b03bc045a79191da68e1479,
+        type: 2}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 224362307332801484, guid: f4f614fd0b03bc045a79191da68e1479,
+        type: 2}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 224362307332801484, guid: f4f614fd0b03bc045a79191da68e1479,
+        type: 2}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 224362307332801484, guid: f4f614fd0b03bc045a79191da68e1479,
+        type: 2}
+      propertyPath: m_RootOrder
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 224362307332801484, guid: f4f614fd0b03bc045a79191da68e1479,
+        type: 2}
+      propertyPath: m_AnchoredPosition.x
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 224362307332801484, guid: f4f614fd0b03bc045a79191da68e1479,
+        type: 2}
+      propertyPath: m_AnchoredPosition.y
+      value: 66
+      objectReference: {fileID: 0}
+    - target: {fileID: 224362307332801484, guid: f4f614fd0b03bc045a79191da68e1479,
+        type: 2}
+      propertyPath: m_SizeDelta.x
+      value: 380
+      objectReference: {fileID: 0}
+    - target: {fileID: 224362307332801484, guid: f4f614fd0b03bc045a79191da68e1479,
+        type: 2}
+      propertyPath: m_SizeDelta.y
+      value: 30
+      objectReference: {fileID: 0}
+    - target: {fileID: 224362307332801484, guid: f4f614fd0b03bc045a79191da68e1479,
+        type: 2}
+      propertyPath: m_AnchorMin.x
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 224362307332801484, guid: f4f614fd0b03bc045a79191da68e1479,
+        type: 2}
+      propertyPath: m_AnchorMin.y
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 224362307332801484, guid: f4f614fd0b03bc045a79191da68e1479,
+        type: 2}
+      propertyPath: m_AnchorMax.x
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 224362307332801484, guid: f4f614fd0b03bc045a79191da68e1479,
+        type: 2}
+      propertyPath: m_AnchorMax.y
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 224362307332801484, guid: f4f614fd0b03bc045a79191da68e1479,
+        type: 2}
+      propertyPath: m_Pivot.x
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 224362307332801484, guid: f4f614fd0b03bc045a79191da68e1479,
+        type: 2}
+      propertyPath: m_Pivot.y
+      value: 0.5
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_ParentPrefab: {fileID: 100100000, guid: f4f614fd0b03bc045a79191da68e1479, type: 2}
+  m_IsPrefabParent: 0
 --- !u!1 &333650385
 GameObject:
   m_ObjectHideFlags: 0
@@ -2413,7 +2513,7 @@ MonoBehaviour:
   subText: {fileID: 1225256197}
   HeadText: {fileID: 333650387}
   DiaText: {fileID: 1070224913}
-  ClickText: {fileID: 114057423743206274, guid: f4f614fd0b03bc045a79191da68e1479,
+  ClickText: {fileID: 114291441490851192, guid: f4f614fd0b03bc045a79191da68e1479,
     type: 2}
   EndDay: {fileID: 1425063144}
 --- !u!4 &1859937326
