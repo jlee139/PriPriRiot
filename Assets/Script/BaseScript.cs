@@ -48,7 +48,6 @@ public class BaseScript : MonoBehaviour {
     List<Prisoner> convertedpri = new List<Prisoner>();
     List<string> Allnames = new List<string>();
     List<Crime> Allcrimes = new List<Crime>();
-    List<Prisoner> curlocpri = new List<Prisoner>();
     List<Text> curlocpriobj = new List<Text>();
 
     int curline, curDay;
@@ -171,15 +170,8 @@ public class BaseScript : MonoBehaviour {
     public void TimeforDialogue(string loc)
     {
         diamode = true;
-        
-        //Get rid of the previous prisoner names
-        for(int i=0;i< curlocpriobj.Count; i++)
-        {
-            Destroy(curlocpriobj[i]);
-        }
-        curlocpri.Clear();
-        curlocpriobj.Clear();
 
+        List<Prisoner> curlocpri = new List<Prisoner>();
 
         //Set up the new diamode by getting rid of the map and turning the other shit back on
         mapCanvas.enabled = false;
@@ -209,7 +201,7 @@ public class BaseScript : MonoBehaviour {
             EventTrigger trigger = ourtext.GetComponent<EventTrigger>();
             EventTrigger.Entry entry = new EventTrigger.Entry();
             entry.eventID = EventTriggerType.PointerDown;
-            entry.callback.AddListener((data) => { PrisonerNameClicked((PointerEventData)data, temppri, loc); });
+            entry.callback.AddListener((data) => { PrisonerNameClicked((PointerEventData)data, temppri, loc, curlocpri); });
             trigger.triggers.Add(entry);
 
             curlocpriobj.Add(ourtext);
@@ -226,21 +218,15 @@ public class BaseScript : MonoBehaviour {
     }
 
     //When a prisoner is clicked on
-    public void PrisonerNameClicked(PointerEventData data2, Prisoner ourpri, string loc)
+    public void PrisonerNameClicked(PointerEventData data2, Prisoner ourpri, string loc, List<Prisoner> curlocpri)
     {
-       // Debug.Log("Made it.");
-
+      
         //Get rid of the previous prisoner name buttons
         for (int i = 0; i < curlocpriobj.Count; i++)
         {
-            Destroy(curlocpriobj[i]);
+            Destroy(curlocpriobj[i].gameObject);
         }
         curlocpriobj.Clear();
-        
-        for(int i = 0; i < ourpri.diachoices.Count; i++)
-        {
-            Debug.Log(ourpri.diachoices[i].question);
-        }
 
         //Display name + Question
         int random = Random.Range(0, ourpri.diachoices.Count);
@@ -253,35 +239,41 @@ public class BaseScript : MonoBehaviour {
         righttext.transform.SetParent(dialogueCanvas.transform);
         righttext.transform.position = new Vector3(dialogueCanvas.transform.position.x, dialogueCanvas.transform.position.y, 0);
         righttext.text = ourpri.diachoices[random].choiceRight;
+        curlocpriobj.Add(righttext);
         
         //Wrong Question
         Text wrongtext = Instantiate(ClickText, new Vector3(0, 1, 0), Quaternion.identity) as Text;
         wrongtext.transform.SetParent(dialogueCanvas.transform);
         wrongtext.transform.position = new Vector3(dialogueCanvas.transform.position.x, dialogueCanvas.transform.position.y -30, 0);
         wrongtext.text = ourpri.diachoices[random].choiceWrong;
+        curlocpriobj.Add(wrongtext);
 
         EventTrigger trigger = righttext.GetComponent<EventTrigger>();
         EventTrigger.Entry entry = new EventTrigger.Entry();
         entry.eventID = EventTriggerType.PointerDown;
-        entry.callback.AddListener((data) => { TalkToPrisoner((PointerEventData)data, ourpri, righttext, wrongtext, "right", random, loc); });
+        entry.callback.AddListener((data) => { TalkToPrisoner((PointerEventData)data, ourpri, curlocpri, "right", random, loc); });
         trigger.triggers.Add(entry);
 
         EventTrigger trigger2 = wrongtext.GetComponent<EventTrigger>();
         EventTrigger.Entry entry2 = new EventTrigger.Entry();
         entry2.eventID = EventTriggerType.PointerDown;
-        entry2.callback.AddListener((data) => { TalkToPrisoner((PointerEventData)data, ourpri, righttext,wrongtext, "wrong", random, loc); });
+        entry2.callback.AddListener((data) => { TalkToPrisoner((PointerEventData)data, ourpri, curlocpri, "wrong", random, loc); });
         trigger2.triggers.Add(entry2);
 
 
     }
 
     //When you talk to a prisoner you do this
-    public void TalkToPrisoner(PointerEventData data2, Prisoner ourpri, Text Rightone, Text Wrongone, string chosen, int index, string loc)
+    public void TalkToPrisoner(PointerEventData data2, Prisoner ourpri, List<Prisoner> curlocpri, string chosen, int index, string loc)
     {
-        //Get rid of the two choices
-        Destroy(Rightone);
-        Destroy(Wrongone);
+        //Get rid of the previous prisoner name buttons
+        for (int i = 0; i < curlocpriobj.Count; i++)
+        {
+            Destroy(curlocpriobj[i].gameObject);
+        }
+        curlocpriobj.Clear();
 
+        //If the choice was correct
         if (chosen.Equals("right"))
         {
             DiaText.text = ourpri.name + " says: " + ourpri.diachoices[index].responseRight;
@@ -298,6 +290,7 @@ public class BaseScript : MonoBehaviour {
             }
 
         }
+        //Otherwise
         else
         {
             DiaText.text = ourpri.name + " says: " + ourpri.diachoices[index].responseWrong;
@@ -306,31 +299,30 @@ public class BaseScript : MonoBehaviour {
 
         //Remove this prisoner from the current location list
         bool check = curlocpri.Remove(ourpri);
-        
+      //  Debug.Log("Was "+ourpri.name+" deleted? " + check);
 
-        ////Now make us a button to return to location 
-        //Text returntxt = Instantiate(ClickText, new Vector3(0, 1, 0), Quaternion.identity) as Text;
-        //returntxt.transform.SetParent(dialogueCanvas.transform);
-        //returntxt.transform.position = new Vector3(dialogueCanvas.transform.position.x, dialogueCanvas.transform.position.y, 0);
-        //returntxt.text = "Return to "+loc;
 
-        //EventTrigger trigger = returntxt.GetComponent<EventTrigger>();
-        //EventTrigger.Entry entry = new EventTrigger.Entry();
-        //entry.eventID = EventTriggerType.PointerDown;
-        //entry.callback.AddListener((data) => { ReturnToLoc( loc, returntxt); });
-        //trigger.triggers.Add(entry);
+        //Now make us a button to return to location 
+        Text returntxt = Instantiate(ClickText, new Vector3(0, 1, 0), Quaternion.identity) as Text;
+        returntxt.transform.SetParent(dialogueCanvas.transform);
+        returntxt.transform.position = new Vector3(dialogueCanvas.transform.position.x, dialogueCanvas.transform.position.y, 0);
+        returntxt.text = "Return to " + loc;
+
+        EventTrigger trigger = returntxt.GetComponent<EventTrigger>();
+        EventTrigger.Entry entry = new EventTrigger.Entry();
+        entry.eventID = EventTriggerType.PointerDown;
+        entry.callback.AddListener((data) => { ReturnToLoc(loc, returntxt, curlocpri); });
+        trigger.triggers.Add(entry);
 
     }
 
     //When you want to return to prev location, do this
-    public void ReturnToLoc(string loc, Text deleteme)
+    public void ReturnToLoc(string loc, Text deleteme, List<Prisoner> curlocpri)
     {
-        Destroy(deleteme);
-
+        Destroy(deleteme.gameObject);
+        
         DiaText.text = loc + "\n\nWhich prisoner would you like to talk to?";
-
-        if (curlocpri.Count > 0)
-        {
+        DiaTextExpo.text = "";
 
             //Go through curlocpri and list them
             for (int i = 0; i < curlocpri.Count; i++)
@@ -339,17 +331,17 @@ public class BaseScript : MonoBehaviour {
                 Text ourtext = Instantiate(ClickText, new Vector3(0, i, 0), Quaternion.identity) as Text;
                 ourtext.transform.SetParent(dialogueCanvas.transform);
                 ourtext.transform.position = new Vector3(dialogueCanvas.transform.position.x, dialogueCanvas.transform.position.y / 2 + 30 + (i * 30), 0);
-                ourtext.text = curlocpri[i].name;
+            ourtext.text = "Name: " + curlocpri[i].name + "\t\tCrime: " + curlocpri[i].crime;
+            curlocpriobj.Add(ourtext);
 
-                Debug.Log(curlocpri[i].name);
+                //Debug.Log(curlocpri[i].name);
 
                 EventTrigger trigger = ourtext.GetComponent<EventTrigger>();
                 EventTrigger.Entry entry = new EventTrigger.Entry();
                 entry.eventID = EventTriggerType.PointerDown;
-                entry.callback.AddListener((data) => { PrisonerNameClicked((PointerEventData)data, curlocpri[i], loc); });
+                entry.callback.AddListener((data) => { PrisonerNameClicked((PointerEventData)data, curlocpri[i], loc, curlocpri); });
                 trigger.triggers.Add(entry);
             }
-        }
         
     }
 
@@ -357,7 +349,14 @@ public class BaseScript : MonoBehaviour {
     {
         //Time to increment day!
         curDay++;
-      //  Debug.Log("Today is "+curDay);
+        //  Debug.Log("Today is "+curDay);
+
+        //Get rid of the previous prisoner name buttons
+        for (int i = 0; i < curlocpriobj.Count; i++)
+        {
+            Destroy(curlocpriobj[i].gameObject);
+        }
+        curlocpriobj.Clear();
 
         messageText.text = "";
         DiaTextExpo.text = "";
