@@ -110,7 +110,7 @@ public class BaseScript : MonoBehaviour {
         //If we've hit the end of our deadline, it's time to activate the endings
         if (curDay > 7)
         {
-            if (convertedpri.Count < 10)
+            if (convertedpri.Count < 3)
             {
                 BadEndActivate();
             }
@@ -196,7 +196,7 @@ public class BaseScript : MonoBehaviour {
             Text ourtext = Instantiate(ClickText, new Vector3(0,i,0), Quaternion.identity) as Text;
             ourtext.transform.SetParent(dialogueCanvas.transform);
             ourtext.transform.position = new Vector3(dialogueCanvas.transform.position.x, dialogueCanvas.transform.position.y/2+30+(i * 30),0);
-            ourtext.text = "Name: "+temppri.name+"\t\tCrime: "+temppri.crime;
+            ourtext.text = "Name: "+temppri.name+"\t\tCrime: "+temppri.crime + "\t\tDifficulty: " + temppri.difficulty;
 
             EventTrigger trigger = ourtext.GetComponent<EventTrigger>();
             EventTrigger.Entry entry = new EventTrigger.Entry();
@@ -233,33 +233,66 @@ public class BaseScript : MonoBehaviour {
 
         DiaText.text = ourpri.name + " says: "+ ourpri.diachoices[random].question;
 
-        //Create a button text for what the player can choose
-        //Right Question
-        Text righttext = Instantiate(ClickText, new Vector3(0, 1, 0), Quaternion.identity) as Text;
-        righttext.transform.SetParent(dialogueCanvas.transform);
-        righttext.transform.position = new Vector3(dialogueCanvas.transform.position.x, dialogueCanvas.transform.position.y, 0);
-        righttext.text = ourpri.diachoices[random].choiceRight;
-        curlocpriobj.Add(righttext);
-        
-        //Wrong Question
-        Text wrongtext = Instantiate(ClickText, new Vector3(0, 1, 0), Quaternion.identity) as Text;
-        wrongtext.transform.SetParent(dialogueCanvas.transform);
-        wrongtext.transform.position = new Vector3(dialogueCanvas.transform.position.x, dialogueCanvas.transform.position.y -30, 0);
-        wrongtext.text = ourpri.diachoices[random].choiceWrong;
-        curlocpriobj.Add(wrongtext);
+        int flip = Random.Range(0, 2);
 
-        EventTrigger trigger = righttext.GetComponent<EventTrigger>();
-        EventTrigger.Entry entry = new EventTrigger.Entry();
-        entry.eventID = EventTriggerType.PointerDown;
-        entry.callback.AddListener((data) => { TalkToPrisoner((PointerEventData)data, ourpri, curlocpri, "right", random, loc); });
-        trigger.triggers.Add(entry);
+        if (flip == 0)
+        {
+            //Create a button text for what the player can choose
+            //Right Question
+            Text righttext = Instantiate(ClickText, new Vector3(0, 1, 0), Quaternion.identity) as Text;
+            righttext.transform.SetParent(dialogueCanvas.transform);
+            righttext.transform.position = new Vector3(dialogueCanvas.transform.position.x, dialogueCanvas.transform.position.y, 0);
+            righttext.text = ourpri.diachoices[random].choiceRight;
+            curlocpriobj.Add(righttext);
 
-        EventTrigger trigger2 = wrongtext.GetComponent<EventTrigger>();
-        EventTrigger.Entry entry2 = new EventTrigger.Entry();
-        entry2.eventID = EventTriggerType.PointerDown;
-        entry2.callback.AddListener((data) => { TalkToPrisoner((PointerEventData)data, ourpri, curlocpri, "wrong", random, loc); });
-        trigger2.triggers.Add(entry2);
+            //Wrong Question
+            Text wrongtext = Instantiate(ClickText, new Vector3(0, 1, 0), Quaternion.identity) as Text;
+            wrongtext.transform.SetParent(dialogueCanvas.transform);
+            wrongtext.transform.position = new Vector3(dialogueCanvas.transform.position.x, dialogueCanvas.transform.position.y - 30, 0);
+            wrongtext.text = ourpri.diachoices[random].choiceWrong;
+            curlocpriobj.Add(wrongtext);
 
+            EventTrigger trigger = righttext.GetComponent<EventTrigger>();
+            EventTrigger.Entry entry = new EventTrigger.Entry();
+            entry.eventID = EventTriggerType.PointerDown;
+            entry.callback.AddListener((data) => { TalkToPrisoner((PointerEventData)data, ourpri, curlocpri, "right", random, loc); });
+            trigger.triggers.Add(entry);
+
+            EventTrigger trigger2 = wrongtext.GetComponent<EventTrigger>();
+            EventTrigger.Entry entry2 = new EventTrigger.Entry();
+            entry2.eventID = EventTriggerType.PointerDown;
+            entry2.callback.AddListener((data) => { TalkToPrisoner((PointerEventData)data, ourpri, curlocpri, "wrong", random, loc); });
+            trigger2.triggers.Add(entry2);
+        }
+        else
+        {
+            //Create a button text for what the player can choose
+            //Right Question
+            Text righttext = Instantiate(ClickText, new Vector3(0, 1, 0), Quaternion.identity) as Text;
+            righttext.transform.SetParent(dialogueCanvas.transform);
+            righttext.transform.position = new Vector3(dialogueCanvas.transform.position.x, dialogueCanvas.transform.position.y, 0);
+            righttext.text = ourpri.diachoices[random].choiceWrong;
+            curlocpriobj.Add(righttext);
+
+            //Wrong Question
+            Text wrongtext = Instantiate(ClickText, new Vector3(0, 1, 0), Quaternion.identity) as Text;
+            wrongtext.transform.SetParent(dialogueCanvas.transform);
+            wrongtext.transform.position = new Vector3(dialogueCanvas.transform.position.x, dialogueCanvas.transform.position.y - 30, 0);
+            wrongtext.text = ourpri.diachoices[random].choiceRight;
+            curlocpriobj.Add(wrongtext);
+
+            EventTrigger trigger = righttext.GetComponent<EventTrigger>();
+            EventTrigger.Entry entry = new EventTrigger.Entry();
+            entry.eventID = EventTriggerType.PointerDown;
+            entry.callback.AddListener((data) => { TalkToPrisoner((PointerEventData)data, ourpri, curlocpri, "wrong", random, loc); });
+            trigger.triggers.Add(entry);
+
+            EventTrigger trigger2 = wrongtext.GetComponent<EventTrigger>();
+            EventTrigger.Entry entry2 = new EventTrigger.Entry();
+            entry2.eventID = EventTriggerType.PointerDown;
+            entry2.callback.AddListener((data) => { TalkToPrisoner((PointerEventData)data, ourpri, curlocpri, "right", random, loc); });
+            trigger2.triggers.Add(entry2);
+        }
 
     }
 
@@ -280,7 +313,7 @@ public class BaseScript : MonoBehaviour {
 
             DiaTextExpo.text = ourpri.name +" looks happy. You said the correct thing.";
 
-            ourpri.difficulty--;
+            ourpri.difficulty -= 1;
 
             if (ourpri.difficulty < 1 && !ourpri.converted)
             {
@@ -303,16 +336,16 @@ public class BaseScript : MonoBehaviour {
 
 
         //Now make us a button to return to location 
-        Text returntxt = Instantiate(ClickText, new Vector3(0, 1, 0), Quaternion.identity) as Text;
-        returntxt.transform.SetParent(dialogueCanvas.transform);
-        returntxt.transform.position = new Vector3(dialogueCanvas.transform.position.x, dialogueCanvas.transform.position.y, 0);
-        returntxt.text = "Return to " + loc;
+        //Text returntxt = Instantiate(ClickText, new Vector3(0, 1, 0), Quaternion.identity) as Text;
+        //returntxt.transform.SetParent(dialogueCanvas.transform);
+        //returntxt.transform.position = new Vector3(dialogueCanvas.transform.position.x, dialogueCanvas.transform.position.y, 0);
+        //returntxt.text = "Return to " + loc;
 
-        EventTrigger trigger = returntxt.GetComponent<EventTrigger>();
-        EventTrigger.Entry entry = new EventTrigger.Entry();
-        entry.eventID = EventTriggerType.PointerDown;
-        entry.callback.AddListener((data) => { ReturnToLoc(loc, returntxt, curlocpri); });
-        trigger.triggers.Add(entry);
+        //EventTrigger trigger = returntxt.GetComponent<EventTrigger>();
+        //EventTrigger.Entry entry = new EventTrigger.Entry();
+        //entry.eventID = EventTriggerType.PointerDown;
+        //entry.callback.AddListener((data) => { ReturnToLoc(loc, returntxt, curlocpri); });
+        //trigger.triggers.Add(entry);
 
     }
 
@@ -331,7 +364,7 @@ public class BaseScript : MonoBehaviour {
                 Text ourtext = Instantiate(ClickText, new Vector3(0, i, 0), Quaternion.identity) as Text;
                 ourtext.transform.SetParent(dialogueCanvas.transform);
                 ourtext.transform.position = new Vector3(dialogueCanvas.transform.position.x, dialogueCanvas.transform.position.y / 2 + 30 + (i * 30), 0);
-            ourtext.text = "Name: " + curlocpri[i].name + "\t\tCrime: " + curlocpri[i].crime;
+            ourtext.text = "Name: " + curlocpri[i].name + "\t\tCrime: " + curlocpri[i].crime+"\t\tDifficulty: "+curlocpri[i].difficulty;
             curlocpriobj.Add(ourtext);
 
                 //Debug.Log(curlocpri[i].name);
@@ -381,6 +414,10 @@ public class BaseScript : MonoBehaviour {
                 report += convertedpri[i].name+ "\n";
             }
             report += "\n";
+            if(convertedpri.Count > 3)
+            {
+                report += "\nYou can succesfully start a riot!";
+            }
         }
         else
         {
