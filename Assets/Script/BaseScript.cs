@@ -517,7 +517,7 @@ public class BaseScript : MonoBehaviour {
                     temp.diachoices.Add(holdme);
                     alldialogues.RemoveAt(randdia);
 
-                    //Debug.Log(temp.diachoices[j].question);
+                    Debug.Log(temp.diachoices[j].question);
 
                 }
                 //Put the removed dialogues back in
@@ -540,7 +540,7 @@ public class BaseScript : MonoBehaviour {
 
             }
 
-           // Debug.Log("Name: "+temp.name+"\tCrime: "+temp.crime+"\tDifficulty: "+temp.difficulty);
+            Debug.Log("Name: "+temp.name+"\tCrime: "+temp.crime+"\tDifficulty: "+temp.difficulty);
 
             allprisoners.Add(temp);
         }
