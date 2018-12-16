@@ -17,26 +17,18 @@ I began with a [VN tutorial in Unity](http://www.indiana.edu/~gamedev/2015/09/27
     
 ## Future Additions I Would Like:
 
-*A gallery of prisoners to check in on their status and dialogues unlocked
-
-*A way to meet everyone in a location
-
-*Sprites and sfxs I wasn't able to include this time around
-
-*Multiple endings
-
-*Harada
+* A gallery of prisoners to check in on their status and dialogues unlocked
+* A way to meet everyone in a location
+* Sprites and sfxs I wasn't able to include this time around
+* Multiple endings
+* Harada
     
 ## Music & Sound Credits:
 
-*["Underwater 01" by Sara Afonso](http://freemusicarchive.org/music/Sara_Afonso/Underwater_EP/Sara_Afonso_-_Underwater_01)
-
-*["Hand Bells, Singles" by InspectorJ](https://freesound.org/people/InspectorJ/sounds/339809/)
-
-*["Front Door" by InspectorJ](https://freesound.org/people/InspectorJ/sounds/431117/)
-
-*["Wrong" by TheBuilder15](https://freesound.org/people/TheBuilder15/sounds/415764/)
-    
+* ["Underwater 01" by Sara Afonso](http://freemusicarchive.org/music/Sara_Afonso/Underwater_EP/Sara_Afonso_-_Underwater_01)
+* ["Hand Bells, Singles" by InspectorJ](https://freesound.org/people/InspectorJ/sounds/339809/)
+* ["Front Door" by InspectorJ](https://freesound.org/people/InspectorJ/sounds/431117/)
+* ["Wrong" by TheBuilder15](https://freesound.org/people/TheBuilder15/sounds/415764/)
     
     
 Last Updated 12/16/2018
