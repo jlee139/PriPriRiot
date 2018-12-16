@@ -15,13 +15,14 @@ public class BaseScript : MonoBehaviour {
         public string location;
         public int newpage;
     }
-
+    
     struct Prisoner
     {
         public string name;
         public int difficulty;
         public bool converted;
         public string crime;
+        public List<DialogueChoices> diachoices;
     }
 
     struct DialogueChoices
@@ -33,11 +34,21 @@ public class BaseScript : MonoBehaviour {
         public string responseWrong;
     }
 
-    List<EachLine> alllines;
-    List<Prisoner> allprisoners;
-    List<Prisoner> convertedpri;
-    List<string> Allnames;
-    List<string> Allcrimes;
+    struct Crime
+    {
+        public string crimename;
+        public DialogueChoices crimedia;
+    }
+
+
+    List<EachLine> alllines = new List<EachLine>();
+    List<DialogueChoices> alldialogues = new List<DialogueChoices>();
+    List<Prisoner> allprisoners = new List<Prisoner>();
+    List<Prisoner> convertedpri = new List<Prisoner>();
+    List<string> Allnames = new List<string>();
+    List<Crime> Allcrimes = new List<Crime>();
+    List<Prisoner> curlocpri = new List<Prisoner>();
+    List<Text> curlocpriobj = new List<Text>();
 
     int curline, curDay;
     bool vnmode, diamode;
@@ -49,6 +60,7 @@ public class BaseScript : MonoBehaviour {
     [SerializeField] Text subText;
     [SerializeField] Text HeadText;
     [SerializeField] Text DiaText;
+    [SerializeField] Text ClickText;
     [SerializeField] Button EndDay;
 
     // Use this for initialization
@@ -59,9 +71,6 @@ public class BaseScript : MonoBehaviour {
         EndDay.enabled = false;
         dialogueCanvas.enabled = false;
         mapCanvas.enabled = false;
-
-        //Get our dialogue
-        alllines = new List<EachLine>();
 
         for (int n = 1; n <= 7; n++)
         {
@@ -74,15 +83,11 @@ public class BaseScript : MonoBehaviour {
         curDay = 1;
 
         //Game preparing
-        allprisoners = new List<Prisoner>();
-        convertedpri = new List<Prisoner>();
-        Allnames = new List<string>();
-        Allcrimes = new List<string>();
-
         PopulateName();
         PopulateCrime();
+        PopulateDialogue();
         CreatePrisoners();
-
+       
     }
 
     // Update is called once per frame
@@ -164,13 +169,56 @@ public class BaseScript : MonoBehaviour {
     public void TimeforDialogue(string loc)
     {
         diamode = true;
+        
+        //Get rid of the previous prisoner names
+        for(int i=0;i< curlocpriobj.Count; i++)
+        {
+            Destroy(curlocpriobj[i]);
+        }
+        curlocpri.Clear();
+        curlocpriobj.Clear();
+
 
         //Set up the new diamode by getting rid of the map and turning the other shit back on
         mapCanvas.enabled = false;
         dialogueCanvas.enabled = true;
         EndDay.enabled = true;
 
-        DiaText.text = loc;
+        DiaText.text = loc+"\n\nWhich prisoner would you like to talk to?";
+
+        //Randomly pick random people to show up here allprisoners
+        List<Prisoner> deleted = new List<Prisoner>();
+        int random = Random.Range(3, 6);
+
+        for(int i = 0; i < random; i++)
+        {
+            int randperson = Random.Range(0, allprisoners.Count);
+            deleted.Add(allprisoners[randperson]);
+            curlocpri.Add(allprisoners[randperson]);
+
+            Prisoner temppri = allprisoners[randperson];
+
+            //Turn each prisoner into a clickable ClickText
+            Text ourtext = Instantiate(ClickText, new Vector3(0,i,0), Quaternion.identity) as Text;
+            ourtext.transform.SetParent(dialogueCanvas.transform);
+            ourtext.transform.position = new Vector3(dialogueCanvas.transform.position.x, dialogueCanvas.transform.position.y/2+30+(i * 20),0);
+            ourtext.text = temppri.name;
+
+            curlocpriobj.Add(ourtext);
+
+            allprisoners.RemoveAt(randperson);
+        }
+
+        //Put them back
+        for(int i = 0; i < deleted.Count; i++)
+        {
+            allprisoners.Add(deleted[i]);
+        }
+        
+    }
+
+    public void PrisonerClicked(int i)
+    {
 
     }
 
@@ -256,6 +304,17 @@ public class BaseScript : MonoBehaviour {
                 temp.difficulty = 5;
                 temp.crime = "???";
                 temp.converted = false;
+
+                //Set up Dialogue!!!!!
+                DialogueChoices tempdia = new DialogueChoices();
+                tempdia.question = "Ah. You.";
+                tempdia.choiceRight = "Y-yes?";
+                tempdia.choiceWrong = "What?";
+                tempdia.responseRight = "Good luck.";
+                tempdia.responseWrong = "Nothing.";
+
+                temp.diachoices = new List<DialogueChoices>();
+                temp.diachoices.Add(tempdia);
             }
             else
             {
@@ -264,7 +323,7 @@ public class BaseScript : MonoBehaviour {
 
                 //Set a random crime
                 random = Random.Range(0, Allcrimes.Count);
-                temp.crime = Allcrimes[random];
+                temp.crime = Allcrimes[random].crimename;
 
                 //Set converted to false unless difficulty is 0
                 if (temp.difficulty == 0)
@@ -273,6 +332,37 @@ public class BaseScript : MonoBehaviour {
                     convertedpri.Add(temp);
                 }
                 else temp.converted = false;
+
+                //Now set up the Dialogue for them
+                List<DialogueChoices> deleted = new List<DialogueChoices>();
+                for (int j = 0; j < 4; j++)
+                {
+                    int randdia = Random.Range(0, alldialogues.Count);
+                    DialogueChoices holdme = alldialogues[randdia];
+                    deleted.Add(holdme);
+                    temp.diachoices = new List<DialogueChoices>();
+                    temp.diachoices.Add(holdme);
+                    alldialogues.RemoveAt(randdia);
+                }
+                //Put the removed dialogues back in
+                for (int j = 0; j < 4; j++)
+                {
+                    alldialogues.Add(deleted[j]);
+                }
+
+                //Crime-specific dialogue
+                DialogueChoices tempdia = new DialogueChoices();
+
+              //  Debug.Log("Criminal count: "+Allcrimes.Count+"\nRandom Number: "+random);
+
+                tempdia.question = Allcrimes[random].crimedia.question;
+                tempdia.choiceRight = Allcrimes[random].crimedia.choiceRight;
+                tempdia.choiceWrong = Allcrimes[random].crimedia.choiceWrong;
+                tempdia.responseRight = Allcrimes[random].crimedia.responseRight;
+                tempdia.responseWrong = Allcrimes[random].crimedia.responseWrong;
+                temp.diachoices = new List<DialogueChoices>();
+                temp.diachoices.Add(tempdia);
+
             }
 
            // Debug.Log("Name: "+temp.name+"\tCrime: "+temp.crime+"\tDifficulty: "+temp.difficulty);
@@ -315,9 +405,17 @@ public class BaseScript : MonoBehaviour {
                 line = r.ReadLine();
                 if (line != null)
                 {
-                    //string[] lineData = line.Split(';');
-                    //Allcrimes.Add(lineData[0]);
-                    Allcrimes.Add(line);
+                    string[] lineData = line.Split(';');
+                    Crime tempcrime = new Crime();
+                    tempcrime.crimename = lineData[0];
+                    tempcrime.crimedia = new DialogueChoices();
+                    tempcrime.crimedia.question = lineData[1];
+                    tempcrime.crimedia.choiceRight = lineData[2];
+                    tempcrime.crimedia.choiceWrong = lineData[3];
+                    tempcrime.crimedia.responseRight = lineData[4];
+                    tempcrime.crimedia.responseWrong = lineData[5];
+
+                    Allcrimes.Add(tempcrime);
                 }
             } while (line != null);
             r.Close();
@@ -325,7 +423,38 @@ public class BaseScript : MonoBehaviour {
 
     }
 
-   void BadEndActivate()
+    //Read from file "Dialogue.text"
+    void PopulateDialogue()
+    {
+        string line;
+        StreamReader r = new StreamReader("Assets/Text/Dialogue.txt");
+
+        using (r)
+        {
+            do
+            {
+                line = r.ReadLine();
+                if (line != null)
+                {
+                    string[] lineData = line.Split(';');
+                    DialogueChoices tempchoice = new DialogueChoices();
+                    tempchoice.question = lineData[0];
+                    tempchoice.choiceRight = lineData[1];
+                    tempchoice.choiceWrong = lineData[2];
+                    tempchoice.responseRight = lineData[3];
+                    tempchoice.responseWrong = lineData[4];
+                    
+
+                    alldialogues.Add(tempchoice);
+
+                }
+            } while (line != null);
+            r.Close();
+        }
+
+    }
+
+    void BadEndActivate()
     {
         //Clear up the previous lines stored in alllines
         alllines.Clear();

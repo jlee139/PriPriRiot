@@ -1254,7 +1254,7 @@ GameObject:
   - component: {fileID: 1070224914}
   - component: {fileID: 1070224913}
   m_Layer: 8
-  m_Name: DiaExpo
+  m_Name: DiaLocation
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1275,8 +1275,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 2.9, y: 3}
-  m_SizeDelta: {x: 446.3, y: 294}
+  m_AnchoredPosition: {x: 14, y: 130.8}
+  m_SizeDelta: {x: 458.6, y: 51.7}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1070224913
 MonoBehaviour:
@@ -2413,6 +2413,8 @@ MonoBehaviour:
   subText: {fileID: 1225256197}
   HeadText: {fileID: 333650387}
   DiaText: {fileID: 1070224913}
+  ClickText: {fileID: 114057423743206274, guid: f4f614fd0b03bc045a79191da68e1479,
+    type: 2}
   EndDay: {fileID: 1425063144}
 --- !u!4 &1859937326
 Transform:
