@@ -209,7 +209,7 @@ public class BaseScript : MonoBehaviour {
             EventTrigger trigger = ourtext.GetComponent<EventTrigger>();
             EventTrigger.Entry entry = new EventTrigger.Entry();
             entry.eventID = EventTriggerType.PointerDown;
-            entry.callback.AddListener((data) => { OnPointerDownDelegate((PointerEventData)data, temppri, loc); });
+            entry.callback.AddListener((data) => { PrisonerNameClicked((PointerEventData)data, temppri, loc); });
             trigger.triggers.Add(entry);
 
             curlocpriobj.Add(ourtext);
@@ -226,7 +226,7 @@ public class BaseScript : MonoBehaviour {
     }
 
     //When a prisoner is clicked on
-    public void OnPointerDownDelegate(PointerEventData data2, Prisoner ourpri, string loc)
+    public void PrisonerNameClicked(PointerEventData data2, Prisoner ourpri, string loc)
     {
        // Debug.Log("Made it.");
 
@@ -237,6 +237,10 @@ public class BaseScript : MonoBehaviour {
         }
         curlocpriobj.Clear();
         
+        for(int i = 0; i < ourpri.diachoices.Count; i++)
+        {
+            Debug.Log(ourpri.diachoices[i].question);
+        }
 
         //Display name + Question
         int random = Random.Range(0, ourpri.diachoices.Count);
@@ -342,7 +346,7 @@ public class BaseScript : MonoBehaviour {
                 EventTrigger trigger = ourtext.GetComponent<EventTrigger>();
                 EventTrigger.Entry entry = new EventTrigger.Entry();
                 entry.eventID = EventTriggerType.PointerDown;
-                entry.callback.AddListener((data) => { OnPointerDownDelegate((PointerEventData)data, curlocpri[i], loc); });
+                entry.callback.AddListener((data) => { PrisonerNameClicked((PointerEventData)data, curlocpri[i], loc); });
                 trigger.triggers.Add(entry);
             }
         }
@@ -460,17 +464,21 @@ public class BaseScript : MonoBehaviour {
                     convertedpri.Add(temp);
                 }
                 else temp.converted = false;
+                // Debug.Log("Name: "+temp.name);
 
                 //Now set up the Dialogue for them
+                temp.diachoices = new List<DialogueChoices>();
                 List<DialogueChoices> deleted = new List<DialogueChoices>();
                 for (int j = 0; j < 4; j++)
                 {
                     int randdia = Random.Range(0, alldialogues.Count);
                     DialogueChoices holdme = alldialogues[randdia];
-                    deleted.Add(holdme);
-                    temp.diachoices = new List<DialogueChoices>();
+                    deleted.Add(holdme);                   
                     temp.diachoices.Add(holdme);
                     alldialogues.RemoveAt(randdia);
+
+                    //Debug.Log(temp.diachoices[j].question);
+
                 }
                 //Put the removed dialogues back in
                 for (int j = 0; j < 4; j++)
@@ -488,7 +496,6 @@ public class BaseScript : MonoBehaviour {
                 tempdia.choiceWrong = Allcrimes[random].crimedia.choiceWrong;
                 tempdia.responseRight = Allcrimes[random].crimedia.responseRight;
                 tempdia.responseWrong = Allcrimes[random].crimedia.responseWrong;
-                temp.diachoices = new List<DialogueChoices>();
                 temp.diachoices.Add(tempdia);
 
             }
