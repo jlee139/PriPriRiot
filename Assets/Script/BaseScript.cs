@@ -64,6 +64,10 @@ public class BaseScript : MonoBehaviour {
     [SerializeField] Text ClickText;
     [SerializeField] Button EndDay;
 
+    public AudioSource audioSource;
+    public AudioClip audioRight;
+    public AudioClip audioWrong;
+
     // Use this for initialization
     void Start() {
         //We start in vn mode
@@ -220,7 +224,7 @@ public class BaseScript : MonoBehaviour {
     //When a prisoner is clicked on
     public void PrisonerNameClicked(PointerEventData data2, Prisoner ourpri, string loc, List<Prisoner> curlocpri)
     {
-      
+        
         //Get rid of the previous prisoner name buttons
         for (int i = 0; i < curlocpriobj.Count; i++)
         {
@@ -299,8 +303,8 @@ public class BaseScript : MonoBehaviour {
     //When you talk to a prisoner you do this
     public void TalkToPrisoner(PointerEventData data2, Prisoner ourpri, List<Prisoner> curlocpri, string chosen, int index, string loc)
     {
-        //Get rid of the previous prisoner name buttons
-        for (int i = 0; i < curlocpriobj.Count; i++)
+            //Get rid of the previous prisoner name buttons
+            for (int i = 0; i < curlocpriobj.Count; i++)
         {
             Destroy(curlocpriobj[i].gameObject);
         }
@@ -326,7 +330,7 @@ public class BaseScript : MonoBehaviour {
         //Otherwise
         else
         {
-            DiaText.text = ourpri.name + " says: " + ourpri.diachoices[index].responseWrong;
+             DiaText.text = ourpri.name + " says: " + ourpri.diachoices[index].responseWrong;
             DiaTextExpo.text = ourpri.name + " looks upset. You said the wrong thing.";
         }
 
